@@ -1,0 +1,42 @@
+#
+# Deploy Steps
+#
+
+# 1) Compile ASP.NET Core Application so that it could run on server
+dotnet publish -c release -r centos.7-x64
+
+# 2) Create an HTTPD configuration file in "/etc/httpd/conf.d/simonecusimano.conf"
+LimitRequestFieldSize 50000
+ProxyTimeout 1200
+<VirtualHost *:80>
+	ProxyPreserveHost On
+	ProxyPass /scusimano http://127.0.0.1:5001 timeout=1200
+	ProxyPassReverse /scusimano http://127.0.0.1:5001
+	ErrorLog /var/log/httpd/scusimano-error.log
+	CustomLog /var/log/httpd/scusimano-access.log common
+</VirtualHost>
+
+# 3) Create a service file in "/etc/systemd/system/simonecusimano.service"
+[Unit]
+Description=Are2Project
+
+[Service]
+ExecStart=/usr/local/bin/dotnet /home/simone.cusimano/centos.7-x64/Are2Project.dll
+Restart=always
+RestartSec=10
+SyslogIdentifier=Are2Project
+User=root
+WorkingDirectory=/home/simone.cusimano/centos.7-x64/
+Environment=ASPNETCORE_ENVIRONMENT=Production
+
+[Install]
+WantedBy=multi-user.target
+
+# 4) Apache Check Tests
+service httpd configtest
+
+# 5) Service Check Tests
+systemctl status simonecusimano.service
+
+# 6) Enable Apache to perform HTTP request
+/usr/bin/setsebool -P httpd_can_network_connect 1

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Are2Project", "Are2Project\Are2Project.csproj", "{E735FFE7-AF78-4EC9-9CDD-91ECFC8CCB59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExportFileForMlLib", "ExportFileForMlLib\ExportFileForMlLib.csproj", "{7E108DE0-CAFA-489D-BED5-8022C60E7CFD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E735FFE7-AF78-4EC9-9CDD-91ECFC8CCB59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E735FFE7-AF78-4EC9-9CDD-91ECFC8CCB59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E735FFE7-AF78-4EC9-9CDD-91ECFC8CCB59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E735FFE7-AF78-4EC9-9CDD-91ECFC8CCB59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E108DE0-CAFA-489D-BED5-8022C60E7CFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E108DE0-CAFA-489D-BED5-8022C60E7CFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E108DE0-CAFA-489D-BED5-8022C60E7CFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E108DE0-CAFA-489D-BED5-8022C60E7CFD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1C92545A-2CB8-4A5D-965E-CF43B9390B7F}
+	EndGlobalSection
+EndGlobal

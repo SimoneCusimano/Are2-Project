@@ -1,0 +1,83 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+@if (ViewBag.Step == "Step-1")
+{
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Extract metadata from your Facebook photos</h2>
+            <input id="loginButton" class="btn btn-primary" type="button" value="Login" onclick="login(this)" />
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+        function login(button) {
+            button.disabled = true;
+            button.value = "Loading... Please wait";
+            location.href = '@ViewBag.Path' + '@Url.Action("FacebookLogin","Home")';
+        }
+    </script>
+}
+else
+{
+    <div class="row">
+        <h1 id="loadingText">We are retrieving your photos...</h1>
+        <h1 id="loadingCompleteText" style="display:none;">All images have been processed.</h1>
+        <div id="photoGrid0"></div>
+    </div>
+    <div class="row">
+        <img id="loading" src="../images/pleasewait.gif" />
+    </div>
+
+    <script type="text/javascript">
+    $(function () {
+        var gridCount = 1;
+
+        var endpoint = "@ViewBag.Path" + "@Url.Action("RetrievePhotosMetadata", "Home")";
+        var source = new EventSource(endpoint);
+
+        source.onmessage = function (event) {
+            console.log('Photos received');
+
+            var photosDescriptions = JSON.parse(event.data);
+
+            $("#photoGrid" + (gridCount - 1)).after('<div id="photoGrid' + gridCount + '"></div>');
+            var a = $("#photoGrid" + gridCount)
+                .elastic_grid(
+                    {
+                        'filterEffect': 'popup',
+                        'hoverDirection': true,
+                        'hoverDelay': 0,
+                        'hoverInverse': false,
+                        'expandingSpeed': 500,
+                        'expandingHeight': 500,
+                        'items': photosDescriptions
+                });
+            gridCount++;
+        };
+
+        source.onopen = function (event) {
+            console.log("Processing started");
+        };
+
+        source.onerror = function (event) {
+            if (event.eventPhase == EventSource.CLOSED) {
+                console.log("Connection Closed");
+                source.close();
+                $("#loadingText").hide();
+                $("#loading").hide();
+                $("#loadingCompleteText").show();
+            }
+        };
+
+        $(window).unload(function () {
+            console.log("Connection Closed");
+            source.close();
+            return "Unload event fired";
+        });
+
+});
+    </script>
+}
